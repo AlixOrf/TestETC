@@ -20,6 +20,6 @@ public class Mouvement : MonoBehaviour
         verticalInput = Input.GetAxis("Vertical");
 
         transform.Translate(Vector3.forward * Time.deltaTime * verticalInput);
-        transform.Translate(- Vector3.right * Time.deltaTime * horizontalInput);
+        transform.Translate(Vector3.right * Time.deltaTime * horizontalInput);
     }
 }
