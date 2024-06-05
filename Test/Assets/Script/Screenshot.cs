@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
 public class Screenshot : MonoBehaviour
-
 {
+    public Camera camera;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +19,6 @@ public class Screenshot : MonoBehaviour
     {
 
     }
-
     void TakeScreenshot(string fullPath)
     {
         if (camera == null)
