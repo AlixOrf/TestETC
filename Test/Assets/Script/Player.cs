@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public Vector3 boxHalfExtents = new Vector3(1, 1, 1); // Taille de la boîte pour le BoxCast
     public float boxCastMaxDistance = 10f; // Distance maximale pour le BoxCast
     public LayerMask interactableLayerMask; // Masque de couche pour les objets interactifs
+    public Inventory inventory; // Référence à l'inventaire du joueur
 
     void Start()
     {
@@ -20,14 +21,11 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // Le BoxCasting script s'occupe déjà de détecter l'objet
         UpdateInteractionText();
 
-        if (myTarget != null && Input.GetKeyDown(KeyCode.E))
+        if (myTarget != null && Input.GetKeyDown(KeyCode.F)) // Changez la touche si nécessaire
         {
-            myTarget.SetActive(false);
-            interactionText.text = ""; // Effacer le texte lorsque l'objet est désactivé
-            // Ajouter l'objet à l'inventaire
+            PickUpItem();
         }
     }
 
@@ -52,9 +50,19 @@ public class Player : MonoBehaviour
         }
     }
 
+    void PickUpItem()
+    {
+        inventory.AddItem(myTarget);
+        myTarget.SetActive(false);
+        interactionText.text = ""; // Effacer le texte lorsque l'objet est désactivé
+        myTarget = null;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         // Gérer les collisions si nécessaire
     }
 }
+
+
 
