@@ -5,23 +5,9 @@ using UnityEngine;
 public class BoxCasting : MonoBehaviour
 {
     public float m_MaxDistance = 2.0f;
-    //public Collider m_Collider;
     RaycastHit m_Hit;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         if (Physics.BoxCast(transform.position, transform.localScale * 0.5f, transform.forward, out m_Hit, transform.rotation, m_MaxDistance))
         {
@@ -33,7 +19,6 @@ public class BoxCasting : MonoBehaviour
             if (transform.GetComponent<Player>().myTarget != null)
             {
                 transform.GetComponent<Player>().myTarget = null;
-
             }
         }
     }

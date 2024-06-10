@@ -8,54 +8,47 @@ public class Player : MonoBehaviour
 {
     public Rigidbody myRB;
     public GameObject myTarget;
-    public Text interaction_text; // Référence à l'objet TextMeshPro pour afficher le nom de l'objet interactif
+    public Text interactionText; // Référence à l'objet TextMeshPro pour afficher le nom de l'objet interactif
     public Vector3 boxHalfExtents = new Vector3(1, 1, 1); // Taille de la boîte pour le BoxCast
     public float boxCastMaxDistance = 10f; // Distance maximale pour le BoxCast
     public LayerMask interactableLayerMask; // Masque de couche pour les objets interactifs
 
     void Start()
     {
-        interaction_text.text = ""; // Assurez-vous que le texte est vide au début
+        interactionText.text = ""; // Assurez-vous que le texte est vide au début
     }
 
     void Update()
     {
-        DetectInteractableObject();
+        // Le BoxCasting script s'occupe déjà de détecter l'objet
+        UpdateInteractionText();
 
         if (myTarget != null && Input.GetKeyDown(KeyCode.E))
         {
             myTarget.SetActive(false);
-            interaction_text.text = ""; // Effacer le texte lorsque l'objet est désactivé
+            interactionText.text = ""; // Effacer le texte lorsque l'objet est désactivé
             // Ajouter l'objet à l'inventaire
         }
     }
 
-    void DetectInteractableObject()
+    void UpdateInteractionText()
     {
-        RaycastHit hit;
-        Vector3 boxCenter = transform.position;
-        Vector3 boxDirection = transform.forward;
-        Quaternion orientation = transform.rotation;
-
-        if (Physics.BoxCast(boxCenter, boxHalfExtents, boxDirection, out hit, orientation, boxCastMaxDistance, interactableLayerMask))
+        if (myTarget != null)
         {
-            var selectionTransform = hit.transform;
-            var interactable = selectionTransform.GetComponent<InteractableObject>();
+            var interactable = myTarget.GetComponent<InteractableObject>();
 
             if (interactable != null)
             {
-                myTarget = selectionTransform.gameObject;
-                interaction_text.text = interactable.GetItemName();
+                interactionText.text = interactable.GetItemName();
             }
             else
             {
-            
+                interactionText.text = "";
             }
         }
         else
         {
-            myTarget = null;
-            interaction_text.text = "";
+            interactionText.text = "";
         }
     }
 
@@ -64,3 +57,4 @@ public class Player : MonoBehaviour
         // Gérer les collisions si nécessaire
     }
 }
+
